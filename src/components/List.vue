@@ -1,5 +1,14 @@
 <template>
   <div class="search">
+    <h1 v-show="this.$store.state.musicList.info.isLoading">Loading</h1>
+    <h1 v-show="this.$store.state.musicList.info.isSucc">Congratulation</h1>
+    <h1 v-show="this.$store.state.musicList.info.isFatal">Sorry</h1>
+    <el-link
+      type="success"
+      v-if="this.$store.state.musicList.ifDonwload"
+      :href="this.$store.state.musicList.DownloadUrl"
+      >点我下载</el-link
+    >
     <div class="demo-input-suffix">
       <span>
         <el-autocomplete
@@ -11,6 +20,7 @@
           :trigger-on-focus="false"
           :clearable="true"
           @keyup.enter.native="SearchName"
+          @select="SearchName"
         >
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-autocomplete>
@@ -34,17 +44,20 @@ export default {
       //调用 callback 返回建议列表的数据
       this.getRemote();
       cb(this.$store.state.musicList.MList);
+      // console.log(this.$store.state.musicList.MList);
+      this.callb = cb; //以后调用callback用
     },
     getRemote: _.debounce(function () {
-      console.log("此处向后台发起请求:", this.yourInput);
+      this.$store.dispatch("searchByName", this.yourInput);
+    }, 500),
+    getAllResult: _.debounce(function () {
+      this.$store.dispatch("searchAll", this.yourInput);
     }, 500),
     SearchName() {
-      alert(this.yourInput);
+      this.getAllResult();
     },
   },
-  mounted() {
-    //console.log(this.$store.state);
-  },
+  mounted() {},
 };
 </script>
 

@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { Button, Input, Autocomplete } from 'element-ui'
+import { Button, Input, Autocomplete, Link } from 'element-ui'
 import store from './store'
 
 Vue.component(Button.name, Button)
 Vue.component(Input.name, Input)
+Vue.component(Link.name, Link)
 Vue.component(Autocomplete.name, Autocomplete)
 
 Vue.config.productionTip = false
