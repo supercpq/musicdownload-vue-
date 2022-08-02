@@ -12,11 +12,11 @@
         :key="item.id"
         :style="{ height: itemSize + 'px', lineHeight: itemSize + 'px' }"
       >
-        <a href="#">
+        <a :href="`https://music.163.com/#/song?id=${item.id}`">
           <img
             :src="item.picUrl"
             style="width: 90px; height: 90px; float: left"
-          />歌名：{{ item.name }} id：{{ item.id }}</a
+          />歌名：{{ item.name.slice(0, 25) }} id：{{ item.id }}</a
         >
       </div>
     </div>
@@ -61,6 +61,8 @@ export default {
   },
   mounted() {
     this.screenHeight = this.$el.clientHeight;
+    // console.log(this.$el);
+    // console.log(this.$el.clientHeight);
     this.start = 0;
     this.end = this.start + this.visibleCount;
   },
@@ -79,11 +81,19 @@ export default {
   methods: {
     scrollEvent() {
       //当前滚动位置
-      let scrollTop = this.$refs.list.scrollTop;
+      let scrollTop = Math.floor(this.$refs.list.scrollTop);
+      //console.log(scrollTop);
+
       //此时的开始索引
       this.start = Math.floor(scrollTop / this.itemSize);
       //此时的结束索引
       this.end = this.start + this.visibleCount;
+      // if (this.end > this.listData.length) {
+      //   console.log(1);
+      //   // 防止到底之后仍然一直触发滚轮事件
+      //   return;
+      // }
+      console.log(1);
       //此时的偏移量
       this.startOffset = scrollTop - (scrollTop % this.itemSize);
     },

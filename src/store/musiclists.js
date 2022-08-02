@@ -45,7 +45,7 @@ export default {
             this.state.musicList.ifDonwload = false
             var name = value.toString().trim().slice(0, 20)
             if (name) {
-                axios.post("http://127.0.0.1:3007/api/search", `music=${name}`).then(
+                axios.post("http://www.wxhzny.top/api/search", `music=${name}`).then(
                     (res) => {
                         if (res.data.status == 0) {
                             this.state.musicList.info.isLoading = false
