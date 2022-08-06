@@ -45,7 +45,8 @@ export default {
             this.state.musicList.ifDonwload = false
             var name = value.toString().trim().slice(0, 20)
             if (name) {
-                axios.post("http://www.wxhzny.top/api/search", `music=${name}`).then(
+                // axios.post("http://81.68.221.28:3007/api/search", `music=${name}`).then(
+                axios.post("https://www.wxhzny.top/api/search", `music=${name}`).then(
                     (res) => {
                         if (res.data.status == 0) {
                             this.state.musicList.info.isLoading = false
@@ -105,7 +106,7 @@ export default {
         SEARCHALL(state, value) {
             //更新AllList
             this.state.musicList.AllList = value
-            console.log(this.state.musicList.AllList)
+            //console.log(this.state.musicList.AllList)
             this.state.musicList.isShow = true
         },
         DOWNLOADMUSIC(state, value) {

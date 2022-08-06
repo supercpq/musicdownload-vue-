@@ -1,5 +1,5 @@
 <template>
-  <div ref="list" class="infinite-list-container" @scroll="scrollEvent($event)">
+  <div ref="list" class="infinite-list-container" @scroll="getAllResult">
     <div
       class="infinite-list-phantom"
       :style="{ height: listHeight + 'px' }"
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import _ from "lodash";
+
 export default {
   name: "VirtualList",
   props: {
@@ -93,10 +95,27 @@ export default {
       //   // 防止到底之后仍然一直触发滚轮事件
       //   return;
       // }
-      console.log(1);
+      //console.log(1);
       //此时的偏移量
       this.startOffset = scrollTop - (scrollTop % this.itemSize);
     },
+    //正常写
+    // getAllResult: function () {
+    //   this.scrollEvent(this.$event);
+    // },
+    //防抖
+    // getAllResult: _.debounce(function () {
+    //   this.scrollEvent(this.$event);
+    // }, 16.7),
+    //节流
+    getAllResult: _.throttle(
+      function () {
+        this.scrollEvent(this.$event);
+      },
+      16.7,
+      { trailing: false }
+    ),
+    //rAF:以 16.7ms 的频率触发事件在此场景并不合适所以没有使用
   },
 };
 </script>
